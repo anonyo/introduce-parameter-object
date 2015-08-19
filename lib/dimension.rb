@@ -13,16 +13,14 @@ class Dimension
   end
 
   def calculate_shipping
-    express ? express_shipping(volume, weight).get_cost : normal_shipping(volume, weight).get_cost
+    shipping(volume, weight).get_cost
   end
 
   private
 
-  def express_shipping(volume, weight)
-    @express_shipping ||= ExpressShipping.new(volume, weight)
-  end
-
-  def normal_shipping(volume, weight)
-    @normal_shipping ||= NormalShipping.new(volume, weight)
+  def shipping(volume, weight)
+    express ?
+      ExpressShipping.new(volume, weight) :
+      NormalShipping.new(volume, weight)
   end
 end
